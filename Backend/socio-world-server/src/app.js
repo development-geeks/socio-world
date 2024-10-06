@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 
-// Enable CORS
+// Enable CO
 app.use(cors());
 
 
