@@ -1,6 +1,6 @@
 import { useState } from "react";
-import FormInput from "../../../components/form-components/FormInput";
 import { Link } from "react-router-dom";
+import FormInput from "src/components/form-components/FormInput";
 
 const LoginForm = () => {
   const [formValues, setFormValues] = useState({
@@ -29,7 +29,6 @@ const LoginForm = () => {
 
   const validate = (name, value, focused) => {
     const { regex, message } = getRegexForValidation(name);
-    console.log(name, value, message, formInputFoucsed.username);
 
     if (!focused) {
       return null;

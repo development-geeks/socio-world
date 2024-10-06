@@ -1,7 +1,7 @@
 import { useState } from "react";
-import FormInput from "../../../components/form-components/FormInput";
-import ProgressBar from "../../../components/form-components/ProgressBar";
-import { getPasswordStrengthProgress } from "../utils";
+import FormInput from "src/components/form-components/FormInput";
+import ProgressBar from "src/components/form-components/ProgressBar";
+import { getPasswordStrengthProgress } from "src/utils/authentication/getPasswordStrengthProgress";
 
 const SignupForm = () => {
   const [formValues, setFormValues] = useState({
