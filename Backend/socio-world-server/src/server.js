@@ -1,5 +1,5 @@
 // server.js
-require('dotenv').config({ path: '../.env' }); 
+require('dotenv').config({ path: `${process.cwd()}/.env` }); 
 
 const app = require('./app');
 console.log(process.env.PORT)
