@@ -20,6 +20,27 @@ const LoginForm = () => {
     password: null,
   });
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await fetch("http://localhost:8000/api/auth/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ username: "sahilkhan", password: "admin123" }),
+  //       credentials: "include",
+  //     });
+  //     console.log(res.data);
+
+  //     const userRes = await fetch("http://localhost:8000/api/users/all", {
+  //       method: "GET",
+  //       credentials: "include",
+  //     });
+  //     console.log(userRes);
+  //   };
+  //   fetchData();
+  // }, []);
+
   const getRegexForValidation = (name) => {
     if (name === "username")
       return { regex: /^[A-Za-z]{5,}$/, message: "Username should be atleast 5 characters" };

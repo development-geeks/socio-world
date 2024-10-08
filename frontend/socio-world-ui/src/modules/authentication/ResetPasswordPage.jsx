@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
             <ResetPasswordForm />
           </div>
           <p className="mb-4 mt-4 text-sw-gray text-center text-sw-medium">
-            Back to &nbsp;
+            Back to{" "}
             <Link to="/login" className="text-sw-primary text-sw-medium">
               Sign in
             </Link>

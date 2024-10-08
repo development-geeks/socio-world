@@ -10,7 +10,6 @@ const LoginPage = () => {
             <span className="text-sw-gray text-sw-medium">
               Don&apos;t have an account?{" "}
               <Link to="/signup" className="text-sw-primary text-sw-medium">
-                {" "}
                 Click here to sign up
               </Link>
             </span>

@@ -14,11 +14,12 @@ const FormInput = ({
   labelClassNames,
   helperTextClassNames,
   isError,
+  size = "medium",
   ...inputProps
 }) => {
   // base classes for input fields
   const baseTextInputClasses =
-    "bg-gray-50 border-[1.5px] border-gray-400 text-gray-900 text-lg rounded-md focus-visible:outline-none focus-visible:border-[1.5px] focus-visible:border-[#0f6fec] w-full py-2.5 px-6";
+    "bg-gray-50 border-[1.5px] border-gray-400 text-gray-900 rounded-md focus-visible:outline-none focus-visible:border-[1.5px] focus-visible:border-[#0f6fec] w-full py-2.5 px-6";
   const baseCheckboxInputClasses =
     "w-4 h-4 text-sw-primary bg-gray-100 border-gray-300 rounded focus:ring-sw-primary";
 
@@ -34,6 +35,9 @@ const FormInput = ({
       },
       inputProps.className,
       {
+        "text-sm": size === "small",
+        "text-sw-medium": size === "medium",
+        "text-lg": size === "large",
         "border-sw-danger focus-visible:border-sw-danger": isError,
       }
     )
@@ -115,6 +119,7 @@ FormInput.propTypes = {
   labelClassNames: PropTypes.string,
   isError: PropTypes.bool,
   helperTextClassNames: PropTypes.string,
+  size: PropTypes.oneOf(["small", "medium", "large"]),
 };
 
 export default FormInput;

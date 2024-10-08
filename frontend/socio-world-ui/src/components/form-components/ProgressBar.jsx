@@ -8,9 +8,9 @@ const ProgressBar = ({
 }) => {
   return (
     <div>
-      <div className="w-full rounded-full h-2.5 mb-4" style={{ backgroundColor: backgroundColor }}>
+      <div className="w-full rounded-full h-2 mb-4" style={{ backgroundColor: backgroundColor }}>
         <div
-          className="h-2.5 rounded-full transition-all duration-300 ease-in-out animate-striped"
+          className="h-2 rounded-full transition-all duration-300 ease-in-out animate-striped"
           style={{ width: `${percentage}%`, backgroundColor: progressColor }}
         ></div>
       </div>
