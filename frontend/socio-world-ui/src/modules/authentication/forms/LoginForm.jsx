@@ -1,12 +1,17 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "src/components/form-components/FormInput";
+import CustomButton from "src/components/CustomButton";
+import { API_URL } from "src/utils/constants";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
-    rememberMe: "",
+    rememberMe: false,
   });
 
   // to track first focus lose, so can show error on further focus state
@@ -20,26 +25,6 @@ const LoginForm = () => {
     password: null,
   });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const res = await fetch("http://localhost:8000/api/auth/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username: "sahilkhan", password: "admin123" }),
-  //       credentials: "include",
-  //     });
-  //     console.log(res.data);
-
-  //     const userRes = await fetch("http://localhost:8000/api/users/all", {
-  //       method: "GET",
-  //       credentials: "include",
-  //     });
-  //     console.log(userRes);
-  //   };
-  //   fetchData();
-  // }, []);
 
   const getRegexForValidation = (name) => {
     if (name === "username")
@@ -50,7 +35,6 @@ const LoginForm = () => {
 
   const validate = (name, value, focused) => {
     const { regex, message } = getRegexForValidation(name);
-
     if (!focused) {
       return null;
     } else if (regex.test(value)) {
@@ -58,6 +42,12 @@ const LoginForm = () => {
     } else {
       return message;
     }
+  };
+
+  const validateForSubmit = () => {
+    const hasError = Object.values(formErrors).some((error) => error !== null);
+    const hasEmptyString = Object.values(formValues).some((value) => value === "");
+    return !hasError && !hasEmptyString;
   };
 
   const handleChange = (e) => {
@@ -78,6 +68,21 @@ const LoginForm = () => {
       ...formErrors,
       [e.target.name]: validate(e.target.name, e.target.value, true),
     });
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    if (validateForSubmit()) {
+      const res = await axios.post(
+        `${API_URL}/api/login`,
+        { username: formValues.username, password: formValues.password },
+        { withCredentials: "true" }
+      );
+      localStorage.setItem("access_token", res.data.access_token);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
   };
 
   return (
@@ -123,6 +128,11 @@ const LoginForm = () => {
           {" "}
           Forgot Password?
         </Link>
+      </div>
+      <div className="text-center">
+        <CustomButton onClick={handleLogin} variant="primary" size="large">
+          Login
+        </CustomButton>
       </div>
     </form>
   );

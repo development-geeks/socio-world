@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FormInput from "src/components/form-components/FormInput";
 import ProgressBar from "src/components/form-components/ProgressBar";
+import CustomButton from "src/components/CustomButton";
 import { getPasswordStrengthProgress } from "src/utils/authentication/getPasswordStrengthProgress";
 
 const ResetPasswordForm = () => {
@@ -99,6 +100,11 @@ const ResetPasswordForm = () => {
           helperText={formErrors.confirmPassword}
           autoComplete="new-password"
         ></FormInput>
+      </div>
+      <div className="text-center">
+        <CustomButton onClick={() => {}} variant="primary" size="large">
+          Reset Password
+        </CustomButton>
       </div>
     </form>
   );

@@ -1,7 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
 import FormInput from "src/components/form-components/FormInput";
 import ProgressBar from "src/components/form-components/ProgressBar";
+import CustomButton from "src/components/CustomButton";
 import { getPasswordStrengthProgress } from "src/utils/authentication/getPasswordStrengthProgress";
+import { API_URL } from "src/utils/constants";
 
 const SignupForm = () => {
   const [formValues, setFormValues] = useState({
@@ -78,6 +81,23 @@ const SignupForm = () => {
     });
   };
 
+  const validateForSubmit = () => {
+    const hasError = Object.values(formErrors).some((error) => error !== null);
+    const hasEmptyString = Object.values(formValues).some((value) => value === "");
+    return !hasError && !hasEmptyString;
+  };
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    if (validateForSubmit()) {
+      await axios.post(
+        `${API_URL}/api/register`,
+        { username: formValues.username, password: formValues.password },
+        { withCredentials: "true" }
+      );
+    }
+  };
+
   return (
     <form>
       <div className="mb-4">
@@ -137,6 +157,11 @@ const SignupForm = () => {
           name="keepSignedIn"
           labelClassNames="text-base text-sw-gray font-normal"
         ></FormInput>
+      </div>
+      <div className="text-center">
+        <CustomButton onClick={handleRegister} variant="primary" size="large">
+          Sign me up
+        </CustomButton>
       </div>
     </form>
   );

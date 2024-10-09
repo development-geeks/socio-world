@@ -7,7 +7,6 @@ import FormInput from "src/components/form-components/FormInput";
 import PropTypes from "prop-types";
 
 const Header = () => {
-  // const classesForHeader = "w";
 
   return (
     <div className="h-14 flex items-center px-3 bg-white fixed z-99 top-0 w-full">
@@ -20,54 +19,9 @@ const Header = () => {
         </div>
         <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-            <li>
-            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">Dropdown</button>
-              <div
-                id="dropdownNavbar"
-                className="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-              >
-                <ul
-                  className="py-2 text-sm text-gray-700"
-                  aria-labelledby="dropdownLargeButton"
-                >
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Earnings
-                    </a>
-                  </li>
-                </ul>
-                <div className="py-1">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign out
-                  </a>
-                </div>
-              </div>
-            </li>
-            
-            <NavbarItem itemName="Account"/>
-            <NavbarItem itemName="My Network"/>
+            <NavbarItem itemName="Dashboard" />
+            <NavbarItem itemName="Account" />
+            <NavbarItem itemName="My Network" />
           </ul>
         </div>
       </div>
@@ -81,21 +35,22 @@ const Header = () => {
   );
 };
 
-const NavbarItem = ({itemName, path}) => {
-  
-  return <li className="px-2">
-  <a
-    href={`#${path}`}
-    className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
-    aria-current="page"
-  >
-    {itemName}
-  </a>
-</li>
-}
+const NavbarItem = ({ itemName, path }) => {
+  return (
+    <li className="px-2">
+      <a
+        href={`#${path}`}
+        className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+        aria-current="page"
+      >
+        {itemName}
+      </a>
+    </li>
+  );
+};
 NavbarItem.propTypes = {
-  itemName:PropTypes.string,
-  path:PropTypes.string,
-}
+  itemName: PropTypes.string,
+  path: PropTypes.string,
+};
 
 export default Header;

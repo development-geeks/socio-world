@@ -21,9 +21,6 @@ const ResetPasswordPage = () => {
               Sign in
             </Link>
           </p>
-          <div className="text-center">
-            <button className="bg-sw-primary">Reset Password</button>
-          </div>
           <p className="mb-0 mt-4 text-center text-sw-medium text-sw-gray">
             &copy; 2024 Socio World
           </p>

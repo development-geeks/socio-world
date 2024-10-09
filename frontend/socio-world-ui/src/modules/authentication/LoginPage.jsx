@@ -17,9 +17,6 @@ const LoginPage = () => {
           <div className="mt-4">
             <LoginForm></LoginForm>
           </div>
-          <div className="text-center">
-            <button className="bg-sw-primary">Login</button>
-          </div>
 
           <p className="mb-0 mt-4 text-sw-medium text-center text-sw-gray">
             &copy; 2024 Socio World
