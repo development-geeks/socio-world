@@ -5,23 +5,33 @@ import ProgressBar from "src/components/form-components/ProgressBar";
 import CustomButton from "src/components/CustomButton";
 import { getPasswordStrengthProgress } from "src/utils/authentication/getPasswordStrengthProgress";
 import { API_URL } from "src/utils/constants";
+import { splitFullname } from "src/utils/splitFullname";
+import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const RegisterForm = () => {
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
+    fullname: "",
+    email: "",
     username: "",
     password: "",
     confirmPassword: "",
-    keepSignedIn: "",
+    keepSignedIn: false,
   });
 
   // to track first focus lose, so can show error on further focus state
   const [formInputFoucsed, setFormInputFocused] = useState({
+    fullname: false,
+    email: false,
     username: false,
     password: false,
     confirmPassword: false,
   });
 
   const [formErrors, setFormErrors] = useState({
+    fullname: null,
+    email: null,
     username: null,
     password: null,
     confirmPassword: null,
@@ -33,17 +43,26 @@ const SignupForm = () => {
     backgroundColor: "#0000001A",
   });
 
-  const helperText = {
-    username: "We'll never share your email with anyone else.",
-  };
-
   const getRegexForValidation = (name) => {
     if (name === "username")
-      return { regex: /^[A-Za-z]{5,}$/, message: "Username should be atleast 5 characters" };
+      return {
+        regex: /^[A-Za-z0-9_]{5,}$/,
+        message: "Should be atleast 5 characters. (Numbers and _ allowed)",
+      };
     else if (name === "password")
       return { regex: /^.{8,}$/, message: "Password should be atleast 8 characters" };
     else if (name === "confirmPassword")
       return { regex: new RegExp(`^${formValues.password}$`), message: "Password did not match" };
+    else if (name === "email")
+      return {
+        regex: /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        message: "Please enter a valid email address",
+      };
+    else if (name === "fullname")
+      return {
+        regex: /^[A-Za-z\s]{4,}$/,
+        message: "Name should be only letters and atleast 4 characters",
+      };
   };
 
   const validate = (name, value, focused) => {
@@ -89,17 +108,63 @@ const SignupForm = () => {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    if (validateForSubmit()) {
-      await axios.post(
-        `${API_URL}/api/register`,
-        { username: formValues.username, password: formValues.password },
-        { withCredentials: "true" }
-      );
+    if (!validateForSubmit()) {
+      return;
+    }
+    const { fullname, email, username, password, keepSignedIn } = formValues;
+    const { firstName, middleName, lastName } = splitFullname(fullname);
+    const data = {
+      first_name: firstName,
+      middle_name: middleName,
+      last_name: lastName,
+      email,
+      username,
+      password,
+      keepSignedIn,
+    };
+    const res = await axios.post(`${API_URL}/api/v1/auth/register`, data, {
+      withCredentials: "true",
+    });
+    if (res.data.access_token) {
+      localStorage.setItem("access_token", res.data.access_token);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     }
   };
 
   return (
     <form>
+      <div className="mb-4">
+        <FormInput
+          placeholder="Full Name"
+          type="text"
+          value={formValues.fullname}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          name="fullname"
+          isError={Boolean(formErrors.fullname)}
+          helperText={formErrors.fullname}
+          autoComplete="fullname"
+        ></FormInput>
+      </div>
+      <div className="mb-4">
+        <FormInput
+          placeholder="Email Id"
+          type="email"
+          value={formValues.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          name="email"
+          isError={Boolean(formErrors.email)}
+          helperText={formErrors.email}
+          autoComplete="username"
+        ></FormInput>
+      </div>
       <div className="mb-4">
         <FormInput
           placeholder="Username"
@@ -109,7 +174,7 @@ const SignupForm = () => {
           onBlur={handleBlur}
           name="username"
           isError={Boolean(formErrors.username)}
-          helperText={formErrors.username || helperText.username}
+          helperText={formErrors.username}
           autoComplete="username"
         ></FormInput>
       </div>
@@ -167,4 +232,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default RegisterForm;

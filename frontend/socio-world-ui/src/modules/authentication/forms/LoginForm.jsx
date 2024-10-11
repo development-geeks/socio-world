@@ -25,10 +25,12 @@ const LoginForm = () => {
     password: null,
   });
 
-
   const getRegexForValidation = (name) => {
     if (name === "username")
-      return { regex: /^[A-Za-z]{5,}$/, message: "Username should be atleast 5 characters" };
+      return {
+        regex: /^[A-Za-z0-9_]{5,}$/,
+        message: "Should be atleast 5 characters. (Numbers and _ allowed)",
+      };
     else if (name === "password")
       return { regex: /^.{8,}$/, message: "Password should be atleast 8 characters" };
   };
@@ -74,7 +76,7 @@ const LoginForm = () => {
     event.preventDefault();
     if (validateForSubmit()) {
       const res = await axios.post(
-        `${API_URL}/api/login`,
+        `${API_URL}/api/v1/auth/login`,
         { username: formValues.username, password: formValues.password },
         { withCredentials: "true" }
       );

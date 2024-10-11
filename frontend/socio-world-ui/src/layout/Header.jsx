@@ -7,7 +7,6 @@ import FormInput from "src/components/form-components/FormInput";
 import PropTypes from "prop-types";
 
 const Header = () => {
-
   return (
     <div className="h-14 flex items-center px-3 bg-white fixed z-99 top-0 w-full">
       <div className="w-14">

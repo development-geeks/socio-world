@@ -3,7 +3,7 @@ import Loadable from "./Loadable";
 import MinimalLayout from "src/layout/MinimalLayout";
 
 const LoginPage = Loadable(lazy(() => import("src/modules/authentication/LoginPage")));
-const SignupPage = Loadable(lazy(() => import("src/modules/authentication/SignupPage")));
+const RegisterPage = Loadable(lazy(() => import("src/modules/authentication/RegisterPage")));
 const ResetPasswordPage = Loadable(
   lazy(() => import("src/modules/authentication/ResetPasswordPage"))
 );
@@ -18,8 +18,8 @@ const AuthenticationRoutes = {
       element: <LoginPage />,
     },
     {
-      path: "signup",
-      element: <SignupPage />,
+      path: "register",
+      element: <RegisterPage />,
     },
     {
       path: "reset-password",

@@ -9,7 +9,7 @@ const LoginPage = () => {
             <h1 className="mb-2">Sign in</h1>
             <span className="text-sw-gray text-sw-medium">
               Don&apos;t have an account?{" "}
-              <Link to="/signup" className="text-sw-primary text-sw-medium">
+              <Link to="/register" className="text-sw-primary text-sw-medium">
                 Click here to sign up
               </Link>
             </span>

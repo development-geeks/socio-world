@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import SignupForm from "./forms/SignupForm";
+import RegisterForm from "./forms/RegisterForm";
 
-const SignupPage = () => {
+const RegisterPage = () => {
   return (
     <div className="flex-1 flex justify-center items-center">
       <div className="sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 2xl:w-4/12 px-4 flex items-center">
@@ -17,7 +17,7 @@ const SignupPage = () => {
             </span>
           </div>
           <div className="mt-4">
-            <SignupForm />
+            <RegisterForm />
           </div>
 
           <p className="mb-0 mt-4 text-sw-medium text-center text-sw-gray">
@@ -29,4 +29,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default RegisterPage;
