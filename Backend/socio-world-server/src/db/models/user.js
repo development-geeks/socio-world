@@ -1,11 +1,10 @@
-'use strict';
-import { Sequelize } from './../../../node_modules/sequelize/types/sequelize.d';
 const {
-  Model
+  Model,
+  Sequelize
 } = require('sequelize');
 const sequelize =  require('../../config/connection')
 module.exports = sequelize.define('user',{
-  user_id: {
+  id: {
     type: Sequelize.UUID,
     allowNull: false,
     primaryKey: true,
@@ -39,11 +38,9 @@ module.exports = sequelize.define('user',{
   },
   country: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   dob: {
     type: Sequelize.DATE,
-    allowNull: false,
   },
   createdAt: {
     allowNull: false,
@@ -53,7 +50,7 @@ module.exports = sequelize.define('user',{
   updatedAt: {
     allowNull: false,
     type: Sequelize.DATE,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), // Update on change
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'), // Update on change
   },
   deletedAt: {
     type: Sequelize.DATE,
