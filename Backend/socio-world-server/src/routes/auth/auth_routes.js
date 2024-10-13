@@ -1,15 +1,29 @@
-
-
-const express = require('express');
+const createRoutes = require('../factories/routeFactory');
 const loginController = require("../../controllers/auth_controller/login_controller");
 const registerController = require("../../controllers/auth_controller/register_controller");
 const refreshTokenController = require("../../controllers/auth_controller/refresh_token_controller");
 const authRefreshTokenMiddleware = require('../../middlewares/auth_refresh_middleware');
 
-const router = express.Router();
+// Configuration for the auth routes
+const routesConfig = [
+    {
+        method: 'post',
+        path: '/login',
+        handler: loginController.login,
+        middleware: [] 
+    },
+    {
+        method: 'post',
+        path: '/register',
+        handler: registerController.register,
+        middleware: [] 
+    },
+    {
+        method: 'post',
+        path: '/refresh',
+        handler: refreshTokenController.getNewAccessToken,
+        middleware: [authRefreshTokenMiddleware] 
+    }
+];
 
-router.post("/login",loginController.login );
-router.post("/register",registerController.register );
-router.post('/refresh',authRefreshTokenMiddleware,refreshTokenController.getNewAccessToken);
-
-module.exports = router;
+module.exports = createRoutes(routesConfig);
