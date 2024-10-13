@@ -1,9 +1,8 @@
 // server.js
-require('dotenv').config({ path: '../.env' }); 
+require('dotenv').config({ path: `${process.cwd()}/.env` }); 
 
 const app = require('./app');
-console.log(process.env.PORT)
-const PORT = process.env.PORT ||  3000;
+const PORT = process.env.PORT || 3000;
 
 // Start the server
 app.listen(PORT, () => {
