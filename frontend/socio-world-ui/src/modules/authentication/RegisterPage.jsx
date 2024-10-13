@@ -1,7 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterForm from "./forms/RegisterForm";
+import { useToast } from "src/hooks/useToast";
+import { splitFullname } from "src/utils/splitFullname";
+import axios from "axios";
+import { API_URL } from "src/utils/constants";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const { showSuccess } = useToast();
+
+  const handleRegisterFormSubmit = async (formValues) => {
+    const { fullname, email, username, password, keepSignedIn } = formValues;
+    const { firstName, middleName, lastName } = splitFullname(fullname);
+    const data = {
+      first_name: firstName,
+      middle_name: middleName,
+      last_name: lastName,
+      email,
+      username,
+      password,
+      keepSignedIn,
+    };
+    try {
+      const res = await axios.post(`${API_URL}/api/v1/auth/register`, data, {
+        withCredentials: "true",
+      });
+      localStorage.setItem("access_token", res.data.access_token);
+      showSuccess("Signed in successfully...");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex-1 flex justify-center items-center">
       <div className="sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 2xl:w-4/12 px-4 flex items-center">
@@ -17,7 +50,7 @@ const RegisterPage = () => {
             </span>
           </div>
           <div className="mt-4">
-            <RegisterForm />
+            <RegisterForm handleRegisterFormSubmit={handleRegisterFormSubmit} />
           </div>
 
           <p className="mb-0 mt-4 text-sw-medium text-center text-sw-gray">

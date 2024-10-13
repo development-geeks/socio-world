@@ -1,13 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormInput from "src/components/form-components/FormInput";
 import CustomButton from "src/components/CustomButton";
-import { API_URL } from "src/utils/constants";
+import PropTypes from "prop-types";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
-
+const LoginForm = ({ handleLoginFormSubmit }) => {
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
@@ -72,18 +69,10 @@ const LoginForm = () => {
     });
   };
 
-  const handleLogin = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForSubmit()) {
-      const res = await axios.post(
-        `${API_URL}/api/v1/auth/login`,
-        { username: formValues.username, password: formValues.password },
-        { withCredentials: "true" }
-      );
-      localStorage.setItem("access_token", res.data.access_token);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      handleLoginFormSubmit(formValues);
     }
   };
 
@@ -132,12 +121,16 @@ const LoginForm = () => {
         </Link>
       </div>
       <div className="text-center">
-        <CustomButton onClick={handleLogin} variant="primary" size="large">
+        <CustomButton onClick={handleSubmit} variant="primary" size="large">
           Login
         </CustomButton>
       </div>
     </form>
   );
+};
+
+LoginForm.propTypes = {
+  handleLoginFormSubmit: PropTypes.func,
 };
 
 export default LoginForm;
