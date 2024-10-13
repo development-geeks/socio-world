@@ -3,11 +3,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 // Import middlewares
-const responseFormatter = require('./middlewares/responseFormatter');
-const errorHandler = require('./middlewares/errorHandler');
+const responseFormatter = require('./middlewares/response_formatter');
+const errorHandler = require('./middlewares/error_handler');
 
 // Import routes
-const authRoutes = require('./routes/auth/authRoutes');
+const authRoutes = require('./routes/auth/auth_routes');
 
 const app = express();
 

@@ -1,13 +1,12 @@
-// routeFactory.js
+// route_factory.js
 const express = require('express');
 
 const createRoutes = (routesConfig) => {
     const router = express.Router(); // Create a new router instance
 
     routesConfig.forEach(({ method, path, handler, middleware = [] }) => {
-        // Dynamically apply middlewares and the handler
-        const middlewares = middleware.map(mw => require(`../middlewares/${mw}`));
-        router[method](path, ...middlewares, handler);
+        // If the middleware is an array of functions, use them directly
+        router[method](path, ...middleware, handler);
     });
 
     return router;
