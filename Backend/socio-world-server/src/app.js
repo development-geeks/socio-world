@@ -1,8 +1,13 @@
-// app.js
 const express = require('express');
 const cors = require('cors');
-const  authRoutes  = require('./routes/auth/auth_routes');
 const cookieParser = require('cookie-parser');
+
+// Import middlewares
+const responseFormatter = require('./middlewares/responseFormatter');
+const errorHandler = require('./middlewares/errorHandler');
+
+// Import routes
+const authRoutes = require('./routes/auth/authRoutes');
 
 const app = express();
 
@@ -12,20 +17,23 @@ app.use(cors({
     credentials: true,
 }));
 
-// parse cookies from incoming requests
+// Middleware to parse cookies and request bodies
 app.use(cookieParser());
-
-// Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
-// Middleware to parse JSON bodies
 app.use(express.json());
+
+// Apply response formatter and error handler middleware
+app.use(responseFormatter);
+app.use(errorHandler);
 
 // Example route
 app.get('/', (req, res) => {
     const jsonResponse = { message: 'Hello, World!', success: true };
-    res.send(jsonResponse);});
+    res.success(jsonResponse);
+});
 
-// auth routes
-app.use('/api/v1/auth',authRoutes);
+// Auth routes
+app.use('/api/v1/auth', authRoutes);
+
 // Export the app module
 module.exports = app;
