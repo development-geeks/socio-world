@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon --watch src --exec 'node src/server'"
+    "dev": "nodemon --watch src --exec \"node src/server.js\""
   },
   "author": "",
   "license": "ISC",

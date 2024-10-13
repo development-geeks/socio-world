@@ -1,4 +1,4 @@
-const createRoutes = require('../factories/routeFactory');
+const createRoutes = require('../../factory/route_factory');
 const loginController = require("../../controllers/auth_controller/login_controller");
 const registerController = require("../../controllers/auth_controller/register_controller");
 const refreshTokenController = require("../../controllers/auth_controller/refresh_token_controller");
