@@ -1,16 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
 import FormInput from "src/components/form-components/FormInput";
 import ProgressBar from "src/components/form-components/ProgressBar";
 import CustomButton from "src/components/CustomButton";
 import { getPasswordStrengthProgress } from "src/utils/authentication/getPasswordStrengthProgress";
-import { API_URL } from "src/utils/constants";
-import { splitFullname } from "src/utils/splitFullname";
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const RegisterForm = () => {
-  const navigate = useNavigate();
-
+const RegisterForm = ({ handleRegisterFormSubmit }) => {
   const [formValues, setFormValues] = useState({
     fullname: "",
     email: "",
@@ -111,30 +106,7 @@ const RegisterForm = () => {
     if (!validateForSubmit()) {
       return;
     }
-    const { fullname, email, username, password, keepSignedIn } = formValues;
-    const { firstName, middleName, lastName } = splitFullname(fullname);
-    const data = {
-      first_name: firstName,
-      middle_name: middleName,
-      last_name: lastName,
-      email,
-      username,
-      password,
-      keepSignedIn,
-    };
-    const res = await axios.post(`${API_URL}/api/v1/auth/register`, data, {
-      withCredentials: "true",
-    });
-    if (res.data.access_token) {
-      localStorage.setItem("access_token", res.data.access_token);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
-    }
+    handleRegisterFormSubmit(formValues);
   };
 
   return (
@@ -230,6 +202,10 @@ const RegisterForm = () => {
       </div>
     </form>
   );
+};
+
+RegisterForm.propTypes = {
+  handleRegisterFormSubmit: PropTypes.func,
 };
 
 export default RegisterForm;

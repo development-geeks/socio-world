@@ -1,6 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "./forms/LoginForm";
+import { API_URL } from "src/utils/constants";
+import axios from "axios";
+import { useToast } from "src/hooks/useToast";
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { showSuccess } = useToast();
+
+  const handleLoginFormSubmit = async (formValues) => {
+    try {
+      const res = await axios.post(
+        `${API_URL}/api/v1/auth/login`,
+        {
+          username: formValues.username,
+          password: formValues.password,
+          rememberMe: formValues.rememberMe,
+        },
+        { withCredentials: "true" }
+      );
+      localStorage.setItem("access_token", res.data.access_token);
+      showSuccess("Signed in successfully...");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex-1 flex justify-center items-center">
       <div className="sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 2xl:w-4/12 px-4 flex items-center">
@@ -15,7 +42,7 @@ const LoginPage = () => {
             </span>
           </div>
           <div className="mt-4">
-            <LoginForm></LoginForm>
+            <LoginForm handleLoginFormSubmit={handleLoginFormSubmit}></LoginForm>
           </div>
 
           <p className="mb-0 mt-4 text-sw-medium text-center text-sw-gray">

@@ -9,7 +9,7 @@ const CustomIconButton = ({ type, icon: Icon, imageSrc }) => {
   );
 };
 CustomIconButton.propTypes = {
-  type: PropTypes.oneOf(["icon", "image"]),
+  type: PropTypes.oneOf(["icon", "image"]).isRequired,
   icon: PropTypes.elementType,
   imageSrc: PropTypes.string,
 };
