@@ -2,16 +2,16 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
-import { createRoutes } from "./routes/index.js";
-import { RouterProvider } from "react-router-dom";
 import { ToastProvider } from "./context/ToastContext.jsx";
-
-const routes = createRoutes();
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ToastProvider>
-      <RouterProvider router={routes}></RouterProvider>
+      <BrowserRouter>
+        <App></App>
+      </BrowserRouter>
     </ToastProvider>
   </StrictMode>
 );
