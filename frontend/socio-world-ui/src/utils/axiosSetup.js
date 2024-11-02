@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL } from "./constants";
 import { getAccessToken } from "./authentication/getAccessToken";
 import { customRequest } from "./request";
+import toast from "react-hot-toast";
 
 // Create an Axios instance
 const axiosInstance = axios.create({
@@ -79,7 +80,10 @@ axiosInstance.interceptors.response.use(
     }
 
     console.error("Response Error:", errorMessage);
-    alert(errorMessage); // Use a notification library for better UX
+    toast(errorMessage, {
+      duration: 3000,
+      style: { backgroundColor: "#D6293E", color: "#FFF", fontSize: "15px" },
+    });
     return Promise.reject(error);
   }
 );
