@@ -1,16 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "./forms/LoginForm";
-import { API_URL } from "src/utils/constants";
-import axios from "axios";
 import { useToast } from "src/hooks/useToast";
+import { postRequest } from "src/utils/request";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { showSuccess } = useToast();
 
   const handleLoginFormSubmit = async (formValues) => {
     try {
-      const res = await axios.post(
-        `${API_URL}/api/v1/auth/login`,
+      const res = await postRequest(
+        `/api/v1/auth/login`,
         {
           username: formValues.username,
           password: formValues.password,

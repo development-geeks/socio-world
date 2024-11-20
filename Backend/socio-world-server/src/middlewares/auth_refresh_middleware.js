@@ -5,11 +5,11 @@ const authRefreshTokenMiddleware = (req,res, next) => {
   const rememberMe = req.cookies.remember_me;
   
   if(!refreshToken){
-    return res.status(401).json({message:"No Refreh Token"});
+    return res.error("No Refresh Token", 400);
   }
   jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user)=>{
     if(err){
-      return res.status(401).json({message:"Authentication Failed"});
+      return res.error("Authentication Failed", 400);
     }    
     req.user = {...user, rememberMe:rememberMe};
     next();

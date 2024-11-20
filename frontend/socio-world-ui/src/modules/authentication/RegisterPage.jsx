@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import RegisterForm from "./forms/RegisterForm";
 import { useToast } from "src/hooks/useToast";
 import { splitFullname } from "src/utils/splitFullname";
-import axios from "axios";
-import { API_URL } from "src/utils/constants";
+import { postRequest } from "src/utils/request";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const RegisterPage = () => {
       keepSignedIn,
     };
     try {
-      const res = await axios.post(`${API_URL}/api/v1/auth/register`, data, {
+      const res = await postRequest(`/api/v1/auth/register`, data, {
         withCredentials: "true",
       });
       localStorage.setItem("access_token", res.data.access_token);

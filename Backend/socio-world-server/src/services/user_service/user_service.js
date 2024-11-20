@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const { Sequelize } = require('sequelize');
 const User = require("../../db/models/user");
 
@@ -28,10 +27,10 @@ const createUser = async(userData) => {
     }
 }
 
-const getUserByUserId = async(userId) => {
+const getUserById = async(id) => {
   try{
    const foundUser = await User.findOne({
-     where: { [Sequelize.Op.or]: [{ user_id:userId }] }
+     where: { [Sequelize.Op.or]: [{ id:id }] }
    });
 
    return foundUser;
@@ -43,7 +42,7 @@ const getUserByUserId = async(userId) => {
    }
 }
 
-const getUserByUserUsername = async(username) => {
+const getUserByUsername = async(username) => {
   try{
    const foundUser = await User.findOne({
      where: { [Sequelize.Op.or]: [{ username:username }] }
@@ -59,4 +58,4 @@ const getUserByUserUsername = async(username) => {
 }
 
 
-module.exports={createUser, getUserByUserId, getUserByUserUsername}
+module.exports={createUser, getUserById, getUserByUsername}

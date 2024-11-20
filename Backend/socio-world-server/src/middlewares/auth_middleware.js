@@ -5,12 +5,12 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   if(!token){
-    return res.status(401).json({message:"No token found."});
+    return res.error("No token found.", 401);
   }
 
   jwt.verify(token, process.env.JWT_SECRET,(err, user)=>{
     if(err){
-      return res.status(403).json({message:"Authentication Failed"})
+      return res.error("Authentication Failed", 401);
     }
     req.user = user;
     next();

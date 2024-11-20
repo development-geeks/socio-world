@@ -11,8 +11,8 @@ const register = async(req, res) => {
       userId:newUser.id,
       password:userData.password,
     });
-    const accessToken = generateJwtToken({username:newUser.username}, '1h');
-    const refreshToken = generateJwtToken({username:newUser.username}, '10d');  
+    const accessToken = generateJwtToken({userId:newUser.id}, '1h');
+    const refreshToken = generateJwtToken({userId:newUser.id}, '10d');  
     res.cookie("remember_me", userData.keepSignedIn || false, {
       httpOnly:true,
       sameSite: 'Strict',
@@ -24,10 +24,10 @@ const register = async(req, res) => {
       path:"/api/v1/auth/refresh",
       maxAge:userData.keepSignedIn ? 10*24*60*60*1000 : null,
     })
-    res.status(201).json({access_token:accessToken, message:"User registered Successfully"});
+    res.success({access_token:accessToken, message:"User registered Successfully"});
   }
   catch (error) {
-    res.status(400).json({ message: error.message });
+    res.error(error.message, 400);
   }
 };
 

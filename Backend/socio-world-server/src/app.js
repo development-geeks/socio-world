@@ -8,6 +8,7 @@ const errorHandler = require('./middlewares/error_handler');
 
 // Import routes
 const authRoutes = require('./routes/auth/auth_routes');
+const userRoutes = require('./routes/user_routes/user_routes');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 
 // Auth routes
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Export the app module
 module.exports = app;

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { createContext, useCallback } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export const ToastContext = createContext();
 
@@ -25,7 +25,6 @@ export const ToastProvider = ({ children }) => {
 
   return (
     <ToastContext.Provider value={{ showToast, showSuccess, showError }}>
-      <Toaster position="top-right" />
       {children}
     </ToastContext.Provider>
   );
